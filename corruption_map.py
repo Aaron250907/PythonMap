@@ -1,29 +1,15 @@
 import streamlit as st
 import folium
-import json
 import requests
 from streamlit_folium import st_folium
 
-# -----------------------------
-# PAGE CONFIG
-# -----------------------------
-st.set_page_config(
-    page_title="Corruption Map",
-    page_icon="🌍",
-    layout="wide"
-)
+# ---- PAGE CONFIG ----
+st.set_page_config(page_title="Corruption Map", layout="wide")
 
 st.title("🌍 Global Corruption Map (Highlighted Countries)")
+st.write("Hover or click the highlighted countries to view their CPI score.")
 
-st.write("""
-This interactive map highlights **Portugal**, **India**, and **Pakistan** with special colors.  
-Hover or click to view the CPI (Corruption Perception Index) score.
-""")
-
-
-# -----------------------------
-# LOAD WORLD GEOJSON
-# -----------------------------
+# ---- LOAD WORLD GEOJSON ----
 @st.cache_data
 def load_geojson():
     url = "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
@@ -31,10 +17,7 @@ def load_geojson():
 
 world_geojson = load_geojson()
 
-
-# -----------------------------
-# CORRUPTION DATA
-# -----------------------------
+# ---- CPI DATA (ONLY 3 COUNTRIES) ----
 cpi_data = {
     "Portugal": 63,
     "India": 39,
@@ -42,24 +25,18 @@ cpi_data = {
 }
 
 highlight_colors = {
-    "Portugal": "#1e3a8a",   # Deep Blue
+    "Portugal": "#1e3a8a",   # Blue
     "India": "#e76f51",       # Saffron
-    "Pakistan": "#0f5132"     # Deep Green
+    "Pakistan": "#0f5132"     # Green
 }
 
-default_color = "#cbd5e1"   # Light academic grey
-border_color = "#111111"
+default_color = "#d4d4d4"
+border_color = "#333333"
 
-
-# -----------------------------
-# CREATE FOLIUM MAP
-# -----------------------------
+# ---- CREATE MAP ----
 m = folium.Map(location=[20, 0], zoom_start=2, tiles="cartodbpositron")
 
-
-# -----------------------------
-# STYLE FUNCTION
-# -----------------------------
+# ---- STYLE FUNCTION ----
 def style_function(feature):
     country = feature["properties"]["name"]
 
@@ -68,69 +45,55 @@ def style_function(feature):
             "fillColor": highlight_colors[country],
             "color": highlight_colors[country],
             "weight": 2,
-            "fillOpacity": 0.75
+            "fillOpacity": 0.85
         }
 
-    # Default styling for other countries
     return {
         "fillColor": default_color,
         "color": border_color,
-        "weight": 1,
-        "fillOpacity": 0.45
+        "weight": 0.5,
+        "fillOpacity": 0.5
     }
 
-
-# -----------------------------
-# POPUP / TOOLTIP FUNCTION
-# -----------------------------
-def tooltip_function(feature):
-    country = feature["properties"]["name"]
-    score = cpi_data.get(country, "No data")
-    return f"{country} — CPI: {score}"
-
-
-# -----------------------------
-# ADD LAYER
-# -----------------------------
-folium.GeoJson(
-    world_geojson,
-    name="Corruption Map",
-    style_function=style_function,
-    tooltip=folium.GeoJsonTooltip(
-        fields=["name"],
-        aliases=["Country:"],
-        labels=True,
-        sticky=True
-    ),
-    popup=folium.GeoJsonPopup(
-        fields=["name"],
-        aliases=["Country:"],
-        labels=True
+# ---- POPUP & TOOLTIP ----
+def generate_popup(country_name):
+    score = cpi_data.get(country_name, "No CPI Data")
+    return folium.Popup(
+        f"<b>{country_name}</b><br>CPI Score: {score}",
+        max_width=250
     )
-).add_to(m)
 
+def generate_tooltip(country_name):
+    score = cpi_data.get(country_name, "No CPI Data")
+    return f"{country_name} — CPI: {score}"
 
-# -----------------------------
-# ADD LEGEND
-# -----------------------------
+# ---- ADD COUNTRIES ----
+for feature in world_geojson["features"]:
+    country = feature["properties"]["name"]
+
+    folium.GeoJson(
+        feature,
+        style_function=style_function,
+        tooltip=generate_tooltip(country),
+        popup=generate_popup(country)
+    ).add_to(m)
+
+# ---- LEGEND ----
 legend_html = """
 <div style="
-position: fixed; 
-bottom: 30px; left: 30px; width: 220px; 
-background: white; padding: 12px; 
-border-radius: 8px; font-size: 15px;
-box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+position: fixed; bottom: 30px; left: 30px; 
+background: white; padding: 12px 15px;
+border-radius: 8px; 
+box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+font-size: 14px; line-height: 1.5;
 ">
 <b>Highlighted Countries</b><br>
-<span style='color:#1e3a8a;'>■</span> Portugal – CPI 63<br>
-<span style='color:#e76f51;'>■</span> India – CPI 39<br>
-<span style='color:#0f5132;'>■</span> Pakistan – CPI 28<br>
+<span style='color:#1e3a8a;'>■</span> Portugal (63)<br>
+<span style='color:#e76f51;'>■</span> India (39)<br>
+<span style='color:#0f5132;'>■</span> Pakistan (28)
 </div>
 """
 m.get_root().html.add_child(folium.Element(legend_html))
 
-
-# -----------------------------
-# DISPLAY MAP
-# -----------------------------
+# ---- DISPLAY MAP ----
 st_folium(m, width=1100, height=600)
