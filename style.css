@@ -1,0 +1,714 @@
+:root {
+    --bg-dark: #050816;
+    --bg-light: #f4f7fb;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --accent: #ffb347;
+    --text-main: #111827;
+    --text-muted: #4b5563;
+    --border-light: rgba(148, 163, 184, 0.4);
+
+    /* Flag colours */
+    --portugal-green: #006600;
+    --portugal-red: #ff0000;
+
+    --india-saffron: #ff9933;
+    --india-green: #138808;
+
+    --pakistan-green: #01411c;
+
+    --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.25);
+    --radius-xl: 24px;
+}
+
+/* =========================
+   RESET & GLOBAL
+========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    color: var(--text-main);
+    background: radial-gradient(circle at top, #1f2937, #020617 45%, #000 100%);
+}
+
+/* Utility container */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* =========================
+   HEADER / NAV
+========================= */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    backdrop-filter: blur(18px);
+    background: linear-gradient(to right,
+            rgba(15, 23, 42, 0.95),
+            rgba(30, 64, 175, 0.95));
+    border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #e5e7eb;
+}
+
+.logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: conic-gradient(from 200deg,
+            #22c55e,
+            #eab308,
+            #ef4444,
+            #3b82f6,
+            #22c55e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #020617;
+    box-shadow: 0 0 18px rgba(59, 130, 246, 0.7);
+}
+
+.logo-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.main-nav a {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #e5e7eb;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 0.2rem;
+}
+
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, #22c55e, #eab308, #ef4444);
+    border-radius: 999px;
+    transition: width 0.25s ease;
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    width: 100%;
+}
+
+/* Mobile nav toggle */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    width: 20px;
+    height: 2px;
+    background: #e5e7eb;
+    border-radius: 999px;
+}
+
+/* =========================
+   SECTIONS / LAYOUT
+========================= */
+.section {
+    padding: 6rem 0 5rem;
+    position: relative;
+}
+
+.section:first-of-type {
+    padding-top: 6.5rem;
+}
+
+.section-light {
+    background: var(--bg-light);
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+    min-height: 100vh;
+    color: #e5e7eb;
+    background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.2), transparent 55%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.35), transparent 50%),
+        radial-gradient(circle at bottom, rgba(234, 179, 8, 0.2), transparent 60%),
+        #020617;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 0 0,
+            rgba(148, 163, 184, 0.2),
+            transparent 55%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+}
+
+.eyebrow {
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #a5b4fc;
+    margin-bottom: 0.4rem;
+}
+
+.hero h1 {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    margin: 0 0 1rem;
+}
+
+.hero h1 span {
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: #c4b5fd;
+}
+
+.hero-text {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: #cbd5f5;
+}
+
+.hero-cta {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border-radius: 999px;
+    padding: 0.7rem 1.4rem;
+    border: none;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.2s ease;
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, #22c55e, #eab308, #ef4444);
+    color: #020617;
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
+}
+
+.btn.ghost {
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: rgba(15, 23, 42, 0.7);
+    color: #e5e7eb;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}
+
+.hero-stats {
+    margin-top: 2.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+}
+
+.stat {
+    border-radius: 18px;
+    padding: 0.7rem 0.9rem;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    min-width: 110px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #cbd5f5;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.stat-caption {
+    font-size: 0.7rem;
+    color: #9ca3af;
+}
+
+/* =========================
+   HEADINGS + INTRO TEXT
+========================= */
+.section h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+}
+
+.section-intro {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.section-portugal .section-intro,
+.section-india .section-intro,
+.section-pakistan .section-intro,
+.section-solutions .section-intro {
+    color: #e5e7eb;
+}
+
+/* =========================
+   INTERACTIVE SVG WORLD MAP
+========================= */
+
+.world-map-container {
+    width: 100%;
+    max-width: 1500px;
+    margin: 2rem auto 0;
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    background: #020617;
+}
+
+#worldmap {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Glowing circle behind flags */
+.marker-glow {
+    fill: rgba(0, 200, 255, 0.22);
+    stroke: rgba(0, 200, 255, 0.9);
+    stroke-width: 3px;
+    animation: markerPulse 2.3s infinite ease-in-out;
+}
+
+/* Only opacity glow, no radius change (no jitter) */
+@keyframes markerPulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.svg-marker {
+    cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+.svg-marker:hover {
+    filter: brightness(1.2);
+}
+
+/* Popup card */
+.country-popup {
+    position: absolute;
+    display: none;
+    background: rgba(15, 23, 42, 0.97);
+    backdrop-filter: blur(12px);
+    padding: 1rem;
+    border-radius: 12px;
+    width: 230px;
+    color: #e5e7eb;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45);
+    z-index: 9999;
+}
+
+.country-popup h4 {
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+}
+
+.country-popup p {
+    margin: 0 0 0.7rem;
+    font-size: 0.9rem;
+}
+
+.country-popup button {
+    width: 100%;
+    padding: 0.5rem;
+    background: #2df5d0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #020617;
+}
+
+/* =========================
+   COUNTRY RIBBONS (FLAGS)
+========================= */
+.country-ribbon {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.country-ribbon .stripe {
+    flex: 1;
+    height: 10px;
+    border-radius: 999px;
+    opacity: 0.9;
+}
+
+.portugal-ribbon .green {
+    background: var(--portugal-green);
+}
+
+.portugal-ribbon .red {
+    background: var(--portugal-red);
+}
+
+.india-ribbon .saffron {
+    background: var(--india-saffron);
+}
+
+.india-ribbon .white {
+    background: #ffffff;
+}
+
+.india-ribbon .green {
+    background: var(--india-green);
+}
+
+.pakistan-ribbon .dark-green {
+    background: var(--pakistan-green);
+}
+
+.pakistan-ribbon .white {
+    background: #ffffff;
+}
+
+.country-ribbon .badge {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: #020617;
+    background: #f9fafb;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
+}
+
+/* =========================
+   COUNTRY SECTION BGs
+========================= */
+.section-portugal {
+    background:
+        radial-gradient(circle at 0 0, rgba(0, 102, 0, 0.24), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 0, 0, 0.18), transparent 55%),
+        #020617;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
+}
+
+.section-india {
+    background:
+        linear-gradient(to right,
+            rgba(255, 153, 51, 0.16),
+            rgba(255, 255, 255, 0.06),
+            rgba(19, 136, 8, 0.18)),
+        #020617;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.45);
+}
+
+.section-pakistan {
+    background:
+        radial-gradient(circle at 20% 20%, rgba(1, 65, 28, 0.5), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.12), transparent 50%),
+        #020617;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.45);
+}
+
+.section-solutions {
+    background: linear-gradient(135deg, #0f172a, #111827 40%, #1e3a8a);
+    color: #ffffff;
+}
+
+/* =========================
+   CARDS & GRIDS
+========================= */
+.country-grid,
+.solutions-grid {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: rgba(15, 23, 42, 0.94);
+    color: #f9fafb;
+    border-radius: var(--radius-xl);
+    padding: 1.2rem 1.3rem 1.3rem;
+    box-shadow: 0 14px 38px rgba(15, 23, 42, 0.22);
+    border: 1px solid var(--border-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 70px;
+    background: radial-gradient(circle at 20% 0,
+            rgba(59, 130, 246, 0.4),
+            transparent);
+    top: -40px;
+    left: -20%;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(12px);
+}
+
+.card:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 1.08rem;
+}
+
+.card ul {
+    padding-left: 1.1rem;
+    margin: 0;
+}
+
+.card li {
+    margin-bottom: 0.45rem;
+    font-size: 0.93rem;
+    line-height: 1.6;
+}
+
+.card p {
+    font-size: 0.94rem;
+    line-height: 1.7;
+}
+
+/* =========================
+   COMPARISON TABLE
+========================= */
+.comparison-table-wrapper {
+    margin-top: 1.8rem;
+    overflow-x: auto;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 0.7rem 0.7rem;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+.comparison-table thead {
+    background: linear-gradient(to right, #1e3a8a, #0f766e);
+    color: #e5e7eb;
+}
+
+.comparison-table tbody tr:nth-child(odd) {
+    background: #f8fafc;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+    background: #e5edf7;
+}
+
+.comparison-summary {
+    margin-top: 1.2rem;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* =========================
+   REFERENCES
+========================= */
+.references-list {
+    padding-left: 1.1rem;
+    font-size: 0.95rem;
+}
+
+.footnote {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.site-footer {
+    background: #020617;
+    border-top: 1px solid rgba(148, 163, 184, 0.4);
+    padding: 1.5rem 0;
+    color: #9ca3af;
+}
+
+.site-footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.back-to-top {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.back-to-top:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   SCROLL ANIMATIONS
+========================= */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 860px) {
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        background: rgba(15, 23, 42, 0.98);
+        flex-direction: column;
+        padding: 0.7rem 1.5rem 1rem;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .main-nav.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .site-footer .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-stats {
+        gap: 0.6rem;
+    }
+
+    .country-ribbon .badge {
+        font-size: 0.8rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        font-size: 0.86rem;
+    }
+}
